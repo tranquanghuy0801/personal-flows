@@ -1,0 +1,53 @@
+###
+### A complete description of a Prefect Deployment for flow 'fetch-bill-emails'
+###
+name: notify-bills
+description: null
+version: d615851892beb980c6bc5fe7c39e66e9
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: default-agent-pool
+tags: []
+parameters: {}
+schedule: null
+is_schedule_active: true
+infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: fetch-bill-emails
+manifest_path: null
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  _block_document_id: 451197a5-f146-4b99-bc3b-6f0dd28a16ff
+  _block_document_name: anonymous-1d0c1d71-2f4b-4ce3-ade7-23f0b315ab37
+  _is_anonymous: true
+  block_type_slug: process
+  _block_type_slug: process
+storage:
+  repository: https://github.com/tranquanghuy0801/personal-flows
+  reference: null
+  access_token: '**********'
+  include_git_objects: true
+  _block_document_id: 68724c2d-8c20-43aa-801e-d311afa78d28
+  _block_document_name: gh-repo
+  _is_anonymous: false
+  block_type_slug: github
+  _block_type_slug: github
+path: ''
+entrypoint: main.py:fetch_bill_emails
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties: {}
+  required: null
+  definitions: null
+timestamp: '2023-08-29T04:46:44.653951+00:00'
+triggers: []

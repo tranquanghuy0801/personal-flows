@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
 
-@task
+@flow(log_prints=True)
 def create_reminder_icloud(due_date, amount_due):
     try:
         your_key = os.getenv("IFTTT_WEBHOOK_KEY")
@@ -32,9 +32,11 @@ def create_reminder_icloud(due_date, amount_due):
         print("Couldn't create reminder:", e)
 
 
-@flow(log_prints=True, retries=3)
+@flow(log_prints=True)
 def fetch_bill_emails():
     try:
+        # Load environment variables
+        load_dotenv()
         # Login credentials
         username = os.getenv("GMAIL_USERNAME")
         password = os.getenv("GMAIL_APP_PASSWORD")
@@ -87,19 +89,6 @@ def fetch_bill_emails():
         print("Couldn't fetch emails:", e)
 
 
-def deploy():
-    # Define the interval schedule to run the flow every week
-    schedule = IntervalSchedule(interval=timedelta(weeks=1))
-    deployment = Deployment.build_from_flow(
-        flow=fetch_bill_emails,
-        name="fetch-bill-emails",
-        schedule=schedule,
-    )
-    deployment.apply()
-
-
 if __name__ == "__main__":
-    # Load environment variables
-    load_dotenv()
     # Run the flow
-    deploy()
+    fetch_bill_emails()

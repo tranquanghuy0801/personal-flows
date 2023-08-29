@@ -8,6 +8,8 @@ Here is a list of the flows that are currently deployed:
 
 1. Get the amount and due date of next utility bill an and create a reminder in IOS Reminders. (I created IFTTT applets to trigger this flow as this Python library `pyicloud` cannot authenticate with 2FA enabled.)
 
+2. Forward an email to a receipt scanner app immediately after making a payment in supermarket (Woolworths, Coles, etc.)
+
 ## Future Flows
 
 Here is a list of the flows that I am planning to add:
