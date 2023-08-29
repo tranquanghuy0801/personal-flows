@@ -1,22 +1,20 @@
-import os
 import imaplib
 import email
 import re
 import requests
-from prefect import flow, task
-from prefect.server.schemas.schedules import IntervalSchedule
-from prefect.deployments import Deployment
-from dotenv import load_dotenv
+from prefect import flow
+from prefect.blocks.system import Secret
 from datetime import datetime, timedelta
 
 
 @flow(log_prints=True)
 def create_reminder_icloud(due_date, amount_due):
     try:
-        your_key = os.getenv("IFTTT_WEBHOOK_KEY")
+        ifttt_webhook_key = Secret.load("ifttt-webhook-key")
+        webhook_key = ifttt_webhook_key.get()
         # Login credentials
         url = "https://maker.ifttt.com/trigger/create_reminder/with/key/{your_key}".format(
-            your_key=your_key
+            your_key=webhook_key
         )
 
         # IFTTT Maker Webhooks payload
@@ -35,11 +33,11 @@ def create_reminder_icloud(due_date, amount_due):
 @flow(log_prints=True)
 def fetch_bill_emails():
     try:
-        # Load environment variables
-        load_dotenv()
         # Login credentials
-        username = os.getenv("GMAIL_USERNAME")
-        password = os.getenv("GMAIL_APP_PASSWORD")
+        gmail_username = Secret.load("gmail-username")
+        username = gmail_username.get()
+        gmail_password = Secret.load("gmail-password")
+        password = gmail_password.get()
 
         # Connect to the Gmail server
         mail = imaplib.IMAP4_SSL("imap.gmail.com")
